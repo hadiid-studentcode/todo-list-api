@@ -1,105 +1,105 @@
 # Todo List API
 
-Ini adalah RESTful API untuk aplikasi Todo List, dibuat sebagai bagian dari project di [roadmap.sh](https://roadmap.sh/projects/todo-list-api). API ini dibuat menggunakan Node.js, Express, dan Prisma, dengan autentikasi JWT.
+This is a RESTful API for a Todo List application, built as part of a project from [roadmap.sh](https://roadmap.sh/projects/todo-list-api). This API is built with Node.js, Express, and Prisma, featuring JWT authentication.
 
-## ✨ Fitur
+## ✨ Features
 
-* Autentikasi User (Register & Login) menggunakan JSON Web Tokens (JWT).
-* Rute (endpoint) yang dilindungi (protected) untuk semua operasi todo.
-* Operasi CRUD (Create, Read, Update, Delete) penuh untuk Tasks (Tugas).
-* Hashing password menggunakan `bcryptjs`.
-* Penanganan error terpusat (middleware).
+* User Authentication (Register & Login) using JSON Web Tokens (JWT).
+* Protected routes for all todo operations.
+* Full CRUD (Create, Read, Update, Delete) operations for **Todos**.
+* Password hashing using `bcryptjs`.
+* Centralized error handling (middleware).
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Tech Stack
 
 * **Runtime:** Node.js
 * **Framework:** Express.js
-* **Database:** MySQL (dikelola oleh Prisma)
+* **Database:** MySQL (managed by Prisma)
 * **ORM:** Prisma
-* **Autentikasi:** JSON Web Token (`jsonwebtoken`)
+* **Authentication:** JSON Web Token (`jsonwebtoken`)
 * **Hashing:** `bcryptjs`
-* **Lain-lain:** `dotenv`, `nodemon`, `express-async-errors`
+* **Others:** `dotenv`, `nodemon`, `express-async-errors`
 
 ---
 
-## 🚀 Memulai (Getting Started)
+## 🚀 Getting Started
 
-Untuk menjalankan proyek ini secara lokal, ikuti langkah-langkah berikut:
+To run this project locally, follow these steps:
 
-### 1. Prasyarat
+### 1. Prerequisites
 
-* Node.js (v18 atau lebih baru)
+* Node.js (v18 or newer)
 * NPM (Node Package Manager)
-* Server MySQL (Misalnya dari XAMPP, Laragon, atau Docker)
+* MySQL Server (e.g., from XAMPP, Laragon, or Docker)
 
-### 2. Instalasi
+### 2. Installation
 
-1.  **Clone repositori ini:**
+1.  **Clone this repository:**
     ```bash
-    git clone [https://github.com/username/todo-list-api.git](https://github.com/username/todo-list-api.git)
+    git clone [https://github.com/hadiid-studentcode/todo-list-api.git](https://github.com/hadiid-studentcode/todo-list-api.git)
     cd todo-list-api
     ```
 
-2.  **Install dependensi:**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
 
-3.  **Setup file Environment (`.env`)**
-    Buat file `.env` di root proyek dan salin isi dari `.env.example` (jika ada) atau gunakan template di bawah ini. Sesuaikan dengan koneksi database Anda.
+3.  **Setup Environment File (`.env`)**
+    Create a `.env` file in the project root and copy the contents from `.env.example` (if it exists) or use the template below. Adjust it to your database connection.
 
     ```ini
-    # Koneksi Database (sesuaikan dengan setup MySQL Anda)
+    # Database Connection (adjust to your MySQL setup)
     DATABASE_URL="mysql://root:@localhost:3306/db_todolist"
 
-    # Kunci rahasia untuk JWT (ganti dengan string acak yang aman)
-    JWT_SECRET="kunci-rahasia-anda-yang-sangat-aman"
+    # JWT Secret Key (replace with a long, secure random string)
+    JWT_SECRET="your-very-secure-random-string"
 
-    # Port server
+    # Server Port
     PORT=3000
     ```
 
-4.  **Jalankan Migrasi Database**
-    Perintah ini akan membuat tabel (`User`, `Tasks`) di database Anda berdasarkan `schema.prisma`.
+4.  **Run Database Migrations**
+    This command will create the tables (`User`, `Todos`) in your database based on `schema.prisma`.
     ```bash
     npx prisma migrate dev --name init
     ```
 
-5.  **Jalankan Server**
-    * **Mode Development (dengan Nodemon):**
+5.  **Run the Server**
+    * **Development Mode (with Nodemon):**
         ```bash
         npm run dev
         ```
-    * **Mode Produksi:**
+    * **Production Mode:**
         ```bash
         npm start
         ```
 
-Server akan berjalan di `http://localhost:3000`.
+The server will be running at `http://localhost:3000`.
 
 ---
 
-## 📚 Dokumentasi API
+## 📚 API Documentation
 
-Semua rute `/api/tasks` dilindungi dan memerlukan Token JWT. Kirimkan token di header:
-`Authorization: Bearer <token_anda>`
+All `/api/todos` routes are protected and require a JWT Token. Send the token in the header:
+`Authorization: Bearer <your_token>`
 
-### Modul: Autentikasi (`/api/auth`)
+### Module: Authentication (`/api/auth`)
 
-| Method | Endpoint | Deskripsi | Body (JSON) |
+| Method | Endpoint | Description | Body (JSON) |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/api/auth/register` | Mendaftarkan user baru. | `{ "name": "User", "email": "user@mail.com", "password": "123" }` |
-| `POST` | `/api/auth/login` | Login untuk mendapatkan token. | `{ "email": "user@mail.com", "password": "123" }` |
-| `POST` | `/api/auth/logout` | Endpoint (placeholder) logout. | (Tidak ada) |
+| `POST` | `/api/auth/register` | Registers a new user. | `{ "name": "User", "email": "user@mail.com", "password": "123" }` |
+| `POST` | `/api/auth/login` | Logs in to get a token. | `{ "email": "user@mail.com", "password": "123" }` |
+| `POST` | `/api/auth/logout` | Logout (placeholder) endpoint. | (None) |
 
-### Modul: Tasks (`/api/tasks`)
+### Module: Todos (`/api/todos`)
 
-| Method | Endpoint | Deskripsi | Body (JSON) |
+| Method | Endpoint | Description | Body (JSON) |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/api/tasks` | Mendapat semua tasks milik user. | (Tidak ada) |
-| `POST` | `/api/tasks` | Membuat task baru. | `{ "title": "Belajar", "description": "Belajar NestJS" }` |
-| `GET` | `/api/tasks/:id` | Mendapat satu task spesifik. | (Tidak ada) |
-| `PUT` | `/api/tasks/:id` | Memperbarui task. | `{ "title": "Belajar Keras", "description": "..." }` |
-| `DELETE` | `/api/tasks/:id` | Menghapus task. | (Tidak ada) |
+| `GET` | `/api/todos` | Gets all todos for the logged-in user. | (None) |
+| `POST` | `/api/todos` | Creates a new todo. | `{ "title": "Study", "description": "Learn NestJS" }` |
+| `GET` | `/api/todos/:id` | Gets a single todo by ID. | (None) |
+| `PUT` | `/api/todos/:id` | Updates a todo. | `{ "title": "Study Hard", "description": "..." }` |
+| `DELETE` | `/api/todos/:id` | Deletes a todo. | (None) |
