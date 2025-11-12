@@ -9,7 +9,6 @@ export const createTask = async (req, res) => {
   try {
     const task = await taskService.createTask(title, description, user_id);
     return res.status(201).json({
-      message: "Task created successfully",
       task,
     });
   } catch (error) {
@@ -46,7 +45,10 @@ export const deleteTask = async (req, res) => {
 
 export const getTasks = async (req, res) => {
   try {
-    const tasks = await taskService.getTask(req.user.id);
+    const page = parseInt(req.query.page || "1", 10);
+    const limit = parseInt(req.query.limit || "10", 10);
+
+    const tasks = await taskService.getTask(req.user.id, page, limit);
     return res.status(200).json({
       message: "Tasks retrieved successfully",
       tasks,

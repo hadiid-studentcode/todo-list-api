@@ -33,7 +33,11 @@ export const deleteTask = async (id) => {
   return { id };
 };
 
-export const getTask = async (idUser) => {
+export const getTask = async (idUser,page,limit) => {
+
+  const skip = (page-1) * limit;
+
+
   const tasks = await prisma.task.findMany({
     where: {
       user_id: idUser,
@@ -43,6 +47,8 @@ export const getTask = async (idUser) => {
       title: true,
       description: true,
     },
+    skip: skip,
+    take: limit,
   });
 
   return tasks;

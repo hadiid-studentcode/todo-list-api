@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/tasks", taskRouter);
+app.use("/api/todos", taskRouter);
 
 app.use(errorMiddleware);
 
